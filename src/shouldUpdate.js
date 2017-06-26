@@ -14,15 +14,15 @@ export default function (
       scrollDirection,
       distanceScrolled,
     }
-  // We're in footer mode, so we should stay fixed and pinned.
-  } else if (props.footer && currentScrollY <= props.pinStart && state.state !== 'unpinned') {
+  // We're at the top and in footer mode, so we should stay fixed and pinned.
+  } else if (props.footer && currentScrollY <= props.pinStart && state.state !== 'pinned') {
     return {
       action: 'pin',
       scrollDirection,
       distanceScrolled,
     }
   // We're at the top and not fixed yet.
-  } else if (currentScrollY <= props.pinStart && state.state !== 'unfixed') {
+  } else if (!props.footer && currentScrollY <= props.pinStart && state.state !== 'unfixed') {
     return {
       action: 'unfix',
       scrollDirection,
