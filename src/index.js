@@ -8,31 +8,31 @@ const noop = () => {}
 
 export default class Headroom extends Component {
   static propTypes = {
-    parent: PropTypes.func,
     children: PropTypes.any.isRequired,
-    disableInlineStyles: PropTypes.bool,
     disable: PropTypes.bool,
-    upTolerance: PropTypes.number,
+    disableInlineStyles: PropTypes.bool,
     downTolerance: PropTypes.number,
     onPin: PropTypes.func,
-    onUnpin: PropTypes.func,
     onUnfix: PropTypes.func,
-    wrapperStyle: PropTypes.object,
+    onUnpin: PropTypes.func,
+    parent: PropTypes.func,
     pinStart: PropTypes.number,
     style: PropTypes.object,
+    upTolerance: PropTypes.number,
+    wrapperStyle: PropTypes.object,
   };
 
   static defaultProps = {
-    parent: () => window,
-    disableInlineStyles: false,
     disable: false,
-    upTolerance: 5,
+    disableInlineStyles: false,
     downTolerance: 0,
     onPin: noop,
-    onUnpin: noop,
     onUnfix: noop,
-    wrapperStyle: {},
+    onUnpin: noop,
+    parent: () => window,
     pinStart: 0,
+    upTolerance: 5,
+    wrapperStyle: {},
   };
 
   constructor (props) {
