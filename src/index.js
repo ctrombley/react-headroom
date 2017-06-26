@@ -12,6 +12,7 @@ export default class Headroom extends Component {
     disable: PropTypes.bool,
     disableInlineStyles: PropTypes.bool,
     downTolerance: PropTypes.number,
+    footer: PropTypes.bool,
     onPin: PropTypes.func,
     onUnfix: PropTypes.func,
     onUnpin: PropTypes.func,
@@ -26,6 +27,7 @@ export default class Headroom extends Component {
     disable: false,
     disableInlineStyles: false,
     downTolerance: 0,
+    footer: false,
     onPin: noop,
     onUnfix: noop,
     onUnpin: noop,
@@ -41,10 +43,12 @@ export default class Headroom extends Component {
     this.currentScrollY = 0
     this.lastKnownScrollY = 0
     this.ticking = false
+
+    const initialState = this.props.footer ? 'pinned' : 'unfixed'
     this.state = {
-      state: 'unfixed',
+      state: initialState,
       translateY: 0,
-      className: 'headroom headroom--unfixed',
+      className: `headroom headroom--${initialState}`,
     }
   }
 
@@ -164,8 +168,10 @@ export default class Headroom extends Component {
   unpin = () => {
     this.props.onUnpin()
 
+    const translateY = this.props.footer ? `${this.state.height}px` : '-100%'
+
     this.setState({
-      translateY: '-100%',
+      translateY,
       className: 'headroom headroom--unpinned',
     }, () => {
       setTimeout(() => {
@@ -220,28 +226,36 @@ export default class Headroom extends Component {
 
   render () {
     const { ...divProps } = this.props
-    delete divProps.onUnpin
+    const footer = divProps.footer
+
+    delete divProps.children
+    delete divProps.disable
+    delete divProps.disableInlineStyles
+    delete divProps.downTolerance
+    delete divProps.footer
     delete divProps.onPin
     delete divProps.onUnfix
-    delete divProps.disableInlineStyles
-    delete divProps.disable
+    delete divProps.onUnpin
     delete divProps.parent
-    delete divProps.children
-    delete divProps.upTolerance
-    delete divProps.downTolerance
     delete divProps.pinStart
+    delete divProps.upTolerance
 
     const { style, wrapperStyle, ...rest } = divProps
 
     let innerStyle = {
       position: this.props.disable || this.state.state === 'unfixed' ? 'relative' : 'fixed',
-      top: 0,
       left: 0,
       right: 0,
       zIndex: 1,
       WebkitTransform: `translateY(${this.state.translateY})`,
       MsTransform: `translateY(${this.state.translateY})`,
       transform: `translateY(${this.state.translateY})`,
+    }
+
+    if (footer) {
+      innerStyle.bottom = 0
+    } else {
+      innerStyle.top = 0
     }
 
     let className = this.state.className
