@@ -42,6 +42,7 @@ export default function (
   // We're past the header and scrolling down.
   // We transition to "unpinned" if necessary.
   } else if (
+    !props.alwaysPinned &&
     scrollDirection === 'down' &&
     ['pinned', 'unfixed'].indexOf(state.state) >= 0 &&
     currentScrollY > (state.height + props.pinStart) && distanceScrolled > props.downTolerance

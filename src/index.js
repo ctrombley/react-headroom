@@ -8,6 +8,7 @@ const noop = () => {}
 
 export default class Headroom extends Component {
   static propTypes = {
+    alwaysPinned: PropTypes.bool,
     children: PropTypes.any.isRequired,
     disable: PropTypes.bool,
     disableInlineStyles: PropTypes.bool,
@@ -24,6 +25,7 @@ export default class Headroom extends Component {
   };
 
   static defaultProps = {
+    alwaysPinned: false,
     disable: false,
     disableInlineStyles: false,
     downTolerance: 0,
@@ -228,6 +230,7 @@ export default class Headroom extends Component {
     const { ...divProps } = this.props
     const footer = divProps.footer
 
+    delete divProps.alwaysPinned
     delete divProps.children
     delete divProps.disable
     delete divProps.disableInlineStyles

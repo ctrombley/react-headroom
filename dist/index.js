@@ -227,6 +227,7 @@ var Headroom = function (_Component) {
 
       var footer = divProps.footer;
 
+      delete divProps.alwaysPinned;
       delete divProps.children;
       delete divProps.disable;
       delete divProps.disableInlineStyles;
@@ -306,6 +307,7 @@ var Headroom = function (_Component) {
 }(_react.Component);
 
 Headroom.propTypes = {
+  alwaysPinned: _propTypes2.default.bool,
   children: _propTypes2.default.any.isRequired,
   disable: _propTypes2.default.bool,
   disableInlineStyles: _propTypes2.default.bool,
@@ -321,6 +323,7 @@ Headroom.propTypes = {
   wrapperStyle: _propTypes2.default.object
 };
 Headroom.defaultProps = {
+  alwaysPinned: false,
   disable: false,
   disableInlineStyles: false,
   downTolerance: 0,
